@@ -16,9 +16,22 @@ class AccueilController {
         }
     }
 
-//todo
+    //version Mathieu
+    #[Route(path: '/addi/{nbr1}/{nbr2}',name:'app_accueil_addi')]
+    public function addi(mixed $nbr1, mixed $nbr2): Response
+    {
+        $response = '<p>L’addition de ' . 
+            $nbr1 . ' et ' . $nbr2 . 
+            ' est égale au résultat : ' . ($nbr1 + $nbr2) . '</p>';
+        if($nbr1 < 0 && $nbr2 < 0) {
+            $response = '<p>Les deux nombres sont négatifs</p>';
+        }
+        return new Response($response);
+    }
+
+
     #[Route(path: "/calculatrice/{nbr1}/{nbr2}/{operateur}", name:"app_accueil_calculatrice")]
-    public function calculatrice(int $nbr1, int $nbr2, string $operateur):Response { 
+    public function calculatrice(mixed $nbr1, mixed $nbr2, string $operateur):Response { //si int ça se lance pas
        if(is_numeric($nbr1) && is_numeric($nbr2) ){
             switch ($operateur){
                 case  "add": 
