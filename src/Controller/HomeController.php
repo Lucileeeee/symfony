@@ -12,7 +12,7 @@ class HomeController extends AbstractController{
     }
 
     #[Route(path: "/indexBis", name:"indexBis")]
-    public function indexBis(): Response       
+    public function c(): Response       
     {
         return $this->render('html/indexBis.html.twig', [
             'controller_name' => 'HomeController',

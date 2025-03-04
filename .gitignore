@@ -25,3 +25,4 @@
 ###< symfony/asset-mapper ###
 
 /bin/tailwindcss
+assets/styles/tailwind.css
