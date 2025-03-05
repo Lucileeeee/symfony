@@ -39,7 +39,9 @@ class AppFixtures extends Fixture
                     ->setcontent($faker->realText(300, 2))
                     ->setCreateAt(new \DateTimeImmutable($faker->date()))
                     ->setAuthor($faker->randomElement($tabAuthor))
-                    ->addCategory($faker->randomElement($tabCat));
+                    ->addCategory($tabCat[$faker->numberBetween(0,9)])
+                    ->addCategory($tabCat[$faker->numberBetween(10,19)])
+                    ->addCategory($tabCat[$faker->numberBetween(19,29)]);
             $manager->persist($article);
         }
         $manager->flush();
