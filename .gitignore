@@ -26,3 +26,4 @@
 
 /bin/tailwindcss
 assets/styles/tailwind.css
+.env.dev
