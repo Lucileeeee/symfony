@@ -6,9 +6,15 @@
 <div class="grid gap-2 p-2 xl:grid-cols-3 md:grid-cols-2 sm:grid-cols-1">
     {% for article in articles %}
     <div class="w-full bg-white border border-gray-200 shadow-2xs rounded-xl p-4 md:p-5 ">
-      <h1>  {{ article.id }} {{ article.title  }} </h1>
+      <h1 id="{{ article.id }}"> {{ article.title  }} </h1>
         <p>{{ article.content }}</p>
-        <p> {{ account.firstname }} {{ account.lastname }}</p>
+        <p> {{ article.author.firstname }}  {{ article.author.lastname }} </p>
+   
+      {% for cat in article.categories %}
+        {{ cat.name }}
+      {% endfor %}
+      <p> {{ article.createAt  | date("d/m/y") }}  </p>
+      <a href="{{ path('app_article_one', {'id':article.id} ) }}">Détails</a>
       </div>
     {% endfor %}
 </div>

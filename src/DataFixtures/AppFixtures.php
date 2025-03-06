@@ -28,8 +28,7 @@ class AppFixtures extends Fixture
         $tabCat = [];
         for ($i = 0; $i < 30; $i ++) {
             $cat = new Category();
-            $cat->setName($faker->word());
-          /*   $cat->setName($faker->unique()->jobTitle()); */
+            $cat->setName($faker->unique()->jobTitle());
             $manager->persist($cat);
             $tabCat[] = $cat;
         }

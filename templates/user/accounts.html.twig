@@ -6,7 +6,7 @@
 <div class="grid gap-2 p-2 xl:grid-cols-3 md:grid-cols-2 sm:grid-cols-1">
     {% for account in accounts %}
     <div class="w-full bg-white border border-gray-200 shadow-2xs rounded-xl p-4 md:p-5 ">
-      <h1>  {{ account.id }} {{ account.firstname }} {{ account.lastname }} </h1>
+      <h1 id ="{{ account.id }}">  {{ account.firstname }} {{ account.lastname }} </h1>
         <p>{{ account.email }}</p>
       </div>
     {% endfor %}
