@@ -8,12 +8,11 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
-use Symfony\Component\Serializer\Encoder\DecoderInterface;
-use Symfony\Component\Serializer\Encoder\EncoderInterface;
-use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
-use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+
+
 
 
 final class ApiUserController extends AbstractController
@@ -36,25 +35,31 @@ final class ApiUserController extends AbstractController
     }
 
     #[Route('/api/accountOne/', name: 'app_account_one', methods: ['POST'])]
-    public function addAccount(Request $request): Response
+    public function addAccount(Request $request, UserPasswordHasherInterface $hasher): Response
     {
         $request = $request->getContent();
         $account = $this->serializer->deserialize($request, Account::class, 'json'); 
-       /*  if (!$this->accountRepository->findOneBy(["email" => $account->getEmail()])) {
-            var_dump($account); */
-        if (!$this->accountRepository->findOneBy(["email" => $account->getEmail()])) {
+      
+        if($account->getFirstname() && $account->getLastname() && $account->getPassword() && $account->getRoles() ){
+            if (!$this->accountRepository->findOneBy(["email" => $account->getEmail()])) {
+            //hashage du mot de passe
+            $account->setPassword($hasher->hashPassword($account, $account->getPassword()));
             $this->em->persist($account);
             $this->em->flush();
             $code = 201;
+            } 
+            else {
+                $account = "Ce Compte existe déjà";
+                 $code = 400;
+            }
         }
         else {
-            $account = "Ce Compte existe déjà";
-            $code = 400;
+            $account = "Tous les champs ne sont pas renseignés";
         }
         return $this->json($account, $code, [
             "Access-Control-Allow-Origin" => "*",
             "Content-Type" => "application/json"
-        ], []);
+        ], ["groups" => "account:create"]);
     }
 }
 

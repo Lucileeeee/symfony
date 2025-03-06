@@ -5,25 +5,27 @@ namespace App\Entity;
 use App\Repository\AccountRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 
 #[ORM\Entity(repositoryClass: AccountRepository::class)]
-class Account
+class Account implements PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['account:create'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 50)]
-    #[Groups(['account:read', 'article:read'])]
+    #[Groups(['account:read', 'article:read','account:create'])]
     private ?string $firstname = null;
 
     #[ORM\Column(length: 50)]
-    #[Groups(['account:read', 'article:read'])]
+    #[Groups(['account:read', 'article:read','account:create'])]
     private ?string $lastname = null;
 
     #[ORM\Column(length: 50)]
-    #[Groups(['account:read', 'article:read'])]
+    #[Groups(['account:read', 'article:read','account:create'])]
     private ?string $email = null;
 
     #[ORM\Column(length: 100)]
@@ -31,9 +33,10 @@ class Account
     private ?string $password = null;
 
     #[ORM\Column(length: 50)]
-    #[Groups(['account:read', 'article:read'])]
+    #[Groups(['account:read', 'article:read','account:create'])]
     private ?string $roles = null;
 
+    #[Groups(['article:create'])]
     public function getId(): ?int
     {
         return $this->id;
@@ -62,7 +65,7 @@ class Account
 
         return $this;
     }
-//groups?
+
     public function getEmail(): ?string
     {
         return $this->email;
