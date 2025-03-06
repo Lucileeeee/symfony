@@ -27,9 +27,11 @@ class Account
     private ?string $email = null;
 
     #[ORM\Column(length: 100)]
+    #[Groups(['account:read', 'article:read'])]
     private ?string $password = null;
 
     #[ORM\Column(length: 50)]
+    #[Groups(['account:read', 'article:read'])]
     private ?string $roles = null;
 
     public function getId(): ?int
@@ -60,7 +62,7 @@ class Account
 
         return $this;
     }
-
+//groups?
     public function getEmail(): ?string
     {
         return $this->email;

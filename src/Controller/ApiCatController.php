@@ -2,16 +2,29 @@
 
 namespace App\Controller;
 
+namespace App\Controller;
+
 use App\Entity\Category;
 use App\Repository\CategoryRepository;
+use Doctrine\ORM\EntityManagerInterface;
+use phpDocumentor\Reflection\DocBlock\Serializer;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Serializer\Encoder\DecoderInterface;
+use Symfony\Component\Serializer\Encoder\EncoderInterface;
+use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
+use Symfony\Component\Serializer\SerializerInterface;
+
 
 final class ApiCatController extends AbstractController
 {
     public function __construct(
-        private CategoryRepository $categoryRepository
+        private CategoryRepository $categoryRepository,
+        private readonly EntityManagerInterface $em,
+        private readonly SerializerInterface $serializer 
     ) {}
 
     #[Route('/api/categories', name: 'api_category_all')]
@@ -23,5 +36,30 @@ final class ApiCatController extends AbstractController
             [],
             ['groups' => 'category:read']
         );
+    }
+
+    #[Route('/api/category', name: 'app_category_add', methods: ['POST'])]
+    public function addCategory(Request $request): Response
+    {
+        //Récupération le body de la requête
+        $request = $request->getContent();
+        //Convertir en objet Category
+        //deserialize prend 3 arguments : la requete, en quoi on veut l'a transformer et quelle est son format d'entrée 
+        $category = $this->serializer->deserialize($request, Category::class, 'json'); 
+        //Tester si la catégorie n'existe pas
+        if (!$this->categoryRepository->findOneBy(["name" => $category->getName()])) {
+            $this->em->persist($category);
+            $this->em->flush();
+            $code = 201;
+        }
+        //Sinon elle existe déjà
+        else {
+            $category = "Category existe déjà";
+            $code = 400;
+        }
+        return $this->json($category, $code, [
+            "Access-Control-Allow-Origin" => "*",
+            "Content-Type" => "application/json"
+        ], []);
     }
 }
