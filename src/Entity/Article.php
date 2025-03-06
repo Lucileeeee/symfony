@@ -30,12 +30,14 @@ class Article
     private ?\DateTimeImmutable $createAt = null;
 
     #[ORM\ManyToOne]
+    #[Groups(['article:read'])]
     private ?Account $author = null;
 
     /**
      * @var Collection<int, Category>
      */
     #[ORM\ManyToMany(targetEntity: Category::class)]
+    #[Groups(['article:read'])]
     private Collection $categories;
 
     public function __construct()
@@ -117,10 +119,6 @@ class Article
     {
         $this->categories->removeElement($category);
 
-        return $this;
-    }
-
-    public function __toString(){
         return $this;
     }
 }

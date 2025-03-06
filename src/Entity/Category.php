@@ -12,17 +12,19 @@ class Category
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['category:read'])]
+    #[Groups(['category:read', 'article:read'])]
+    //on à ajouter article au groups pour y acceder depuis l'ApiArticle
     private ?int $id = null;
 
     #[ORM\Column(length: 50, nullable: true, /* unique: true */)]
-    #[Groups(['category:read'])]
+    #[Groups(['category:read', 'article:read'])]
     private ?string $name = null;
 
     public function getId(): ?int
     {
         return $this->id;
     }
+
 
     public function getName(): ?string
     {

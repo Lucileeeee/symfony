@@ -4,14 +4,20 @@ namespace App\Controller;
 
 use App\Entity\Article;
 use App\Repository\ArticleRepository;
+use App\Repository\AccountRepository;
+use App\Repository\CategoryRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-class ApiArticleController extends AbstractController
+final class ApiArticleController extends AbstractController
 {
     public function __construct(
-        private ArticleRepository $articleRepository
+        private ArticleRepository $articleRepository,
+
+
+        private AccountRepository $accountRepository,
+        private CategoryRepository $catRepository
     ) {}
 
     #[Route('/api/articles', name: 'api_articles_all')]
@@ -22,8 +28,6 @@ class ApiArticleController extends AbstractController
             200,
             [],
             ['groups' => 'article:read'],
-            ['groups'=>'account:read'],
-            ['groups' => 'category:read']
         );
     }
 }
