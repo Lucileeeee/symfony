@@ -6,9 +6,10 @@ use App\Entity\Article;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
+
 
 
 class ArticleCrudController extends AbstractCrudController
@@ -24,10 +25,10 @@ class ArticleCrudController extends AbstractCrudController
         return [
             IdField::new('id')->hideOnForm(),
             TextField::new('title', "Titre"),
-            TextField::new('content', "Contenu"),
+            TextareaField::new('content', "Contenu")->setMaxLength(30),
             DateTimeField::new('createAt', "Date de Création")->renderAsNativeWidget(true),
-            AssociationField::new('author', "Auteur")->hideOnIndex(),
-            AssociationField::new('categories', "Catégories")->hideOnIndex(),
+            AssociationField::new('author', "Auteur")->autocomplete()->hideOnIndex(),
+            AssociationField::new('categories', "Catégories")->autocomplete()->hideOnIndex(),
         ];
     }
    

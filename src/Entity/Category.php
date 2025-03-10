@@ -16,7 +16,7 @@ class Category
     //on à ajouter article au groups pour y acceder depuis l'ApiArticle
     private ?int $id = null;
 
-    #[ORM\Column(length: 50, nullable: true, /* unique: true */)]
+    #[ORM\Column(length: 50, nullable: true, unique: true)]
     #[Groups(['category:read', 'article:read'])]
     private ?string $name = null;
 

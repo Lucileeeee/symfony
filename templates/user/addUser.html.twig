@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello AccountController!{% endblock %}
+
+{% block body %}
+<turbo-frame id="id-user">
+  <div>
+    {{ form_start(form) }}
+    {{ form_label(form.firstname) }}
+    {{ form_widget(form.firstname) }} {# pour chaque input qu'on récupère #}
+    {{ form_label(form.lastname) }}
+    {{ form_widget(form.lastname) }} {# pour chaque input qu'on récupère #}
+    {{ form_label(form.email) }}
+    {{ form_widget(form.email) }}
+    {{ form_label(form.password) }} {# pour chaque input qu'on récupère #}
+    {{ form_widget(form.password) }} {# pour chaque input qu'on récupère #}
+    {{ form_rest(form) }}{# pour faire un token #}
+    {{ form_end(form) }}
+  </div>
+ {% include "composants/_toast.html.twig" %}
+
+</turbo-frame>
+{% endblock %}

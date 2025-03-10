@@ -24,7 +24,7 @@ class Account implements PasswordAuthenticatedUserInterface
     #[Groups(['account:read', 'article:read','account:create'])]
     private ?string $lastname = null;
 
-    #[ORM\Column(length: 50)]
+    #[ORM\Column(length: 50, unique: true)]
     #[Groups(['account:read', 'article:read','account:create'])]
     private ?string $email = null;
 

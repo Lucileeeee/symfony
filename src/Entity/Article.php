@@ -19,7 +19,7 @@ class Article
     #[Groups(['article:read'])]
     private ?int $id = null;
 
-    #[ORM\Column(length: 50)]
+    #[ORM\Column(length: 50,  unique: true)]
     #[Groups(['article:read'])]
     private ?string $title = null;
 
