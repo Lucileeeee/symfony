@@ -52,16 +52,16 @@ final class ApiArticleController extends AbstractController
         );
     }
 
-    //todo
-    #[Route('/api/articleOne/', name: 'app_addArticle_one', methods: ['POST'])]
-    public function addArticle(Request $request): Response
+    
+   // #[Route('/api/articleOne/', name: 'app_addArticle_one', methods: ['POST'])]
+   /*public function addArticle(Request $request): Response
     {
         $request = $request->getContent();
         $article = $this->serializer->deserialize($request, Article::class, 'json'); 
       
         if($article->getTitle() && $article->getContent() && $article->getCreateAt() && $article->getAuthor()){
-            $article->getAuthor()->getEmail()
-            if (!$this->articleRepository->findOneBy(["title" => $article->getTitle()] , ["content" => $article->getContent()])) {
+            $article->getAuthor()->getEmail(){}
+        /*     if (!$this->articleRepository->findOneBy(["title" => $article->getTitle()] , ["content" => $article->getContent()])) {
                 $this->em->persist($article);
                 $this->em->flush();
                 $code = 201;
@@ -69,15 +69,15 @@ final class ApiArticleController extends AbstractController
             else {
                 $article = "Cet Article existe déjà";
                  $code = 400;
-            }
+            } 
         }
-        else {
+        }else {
             $article = "Tous les champs ne sont pas renseignés";
         }
         return $this->json($article, $code, [
             "Access-Control-Allow-Origin" => "*",
             "Content-Type" => "application/json"
         ], ["groups" => 'article:read', 'article:create']);
-    }
+    } */
 }
 
