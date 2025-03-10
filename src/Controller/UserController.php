@@ -35,7 +35,6 @@ class UserController extends AbstractController{
         ]);
     }
 
-    //todo
     #[Route('/user/add', name: 'app_user_add')]
     public function addOneUser(Request $request): Response
     {
@@ -49,7 +48,7 @@ class UserController extends AbstractController{
                 $user->setRoles("ROLE_USER");
                 $this->em->persist($user);
                 $this->em->flush();
-                $msg= "Toudo Buene";
+                $msg= "Utilisateur bien Enregistré";
                 $status="succes";
             }catch (\Exception $e){
                $msg= "erreur";
@@ -59,7 +58,7 @@ class UserController extends AbstractController{
         }
         $this->addFlash($status, $msg);
         return $this->render('user/addUser.html.twig',
-             ['form'=>$form]);
+             ['formUser'=>$form]);
     }
     
 }

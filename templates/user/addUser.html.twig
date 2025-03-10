@@ -5,17 +5,17 @@
 {% block body %}
 <turbo-frame id="id-user">
   <div>
-    {{ form_start(form) }}
-    {{ form_label(form.firstname) }}
-    {{ form_widget(form.firstname) }} {# pour chaque input qu'on récupère #}
-    {{ form_label(form.lastname) }}
-    {{ form_widget(form.lastname) }} {# pour chaque input qu'on récupère #}
-    {{ form_label(form.email) }}
-    {{ form_widget(form.email) }}
-    {{ form_label(form.password) }} {# pour chaque input qu'on récupère #}
-    {{ form_widget(form.password) }} {# pour chaque input qu'on récupère #}
-    {{ form_rest(form) }}{# pour faire un token #}
-    {{ form_end(form) }}
+    {{ form_start(formUser) }}
+    {{ form_label(formUser.firstname) }}
+    {{ form_widget(formUser.firstname) }} {# pour chaque input qu'on récupère #}
+    {{ form_label(formUser.lastname) }}
+    {{ form_widget(formUser.lastname) }} 
+    {{ form_label(formUser.email) }}
+    {{ form_widget(formUser.email) }}
+    {{ form_label(formUser.password) }} 
+    {{ form_widget(formUser.password) }} 
+    {{ form_rest(formUser) }}{# pour faire un token #}
+    {{ form_end(formUser) }}
   </div>
  {% include "composants/_toast.html.twig" %}
 
