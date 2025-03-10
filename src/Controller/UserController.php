@@ -45,20 +45,24 @@ class UserController extends AbstractController{
         $status ="";
         if($form->isSubmitted()){
             try{
-                $user->setRoles("ROLE_USER");
-                $this->em->persist($user);
-                $this->em->flush();
-                $msg= "Utilisateur bien Enregistré";
-                $status="succes";
+                if(!$this->accountRepository->findOneBy(['email'=>$user->getEmail()])){
+                    $user->setRoles("ROLE_USER");
+                    $this->em->persist($user);
+                    $this->em->flush();
+                    $msg= "Utilisateur bien Enregistré";
+                    $status="succes";
+                }else{
+                    $msg = "Email déjà utilisé";
+                    $status="danger";
+                }
             }catch (\Exception $e){
                $msg= "erreur";
                $status="danger";
             }
-           
         }
         $this->addFlash($status, $msg);
         return $this->render('user/addUser.html.twig',
              ['formUser'=>$form]);
     }
-    
 }
+
