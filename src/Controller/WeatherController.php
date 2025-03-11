@@ -17,11 +17,13 @@ final class WeatherController extends AbstractController
         $ville = $data["name"];
         $pays = $data["sys"]["country"];
         $temperature = $data["main"]["temp"];
-      //  echo $ville . " " . $pays . " " . $temperature;
-      
+        $ic = $data["weather"][0]["icon"];
+     
         return $this->render('weather/weatherVue.html.twig',
         ["ville" => $ville??null,
             "pays" => $pays??null,
-            "temperature" => $temperature??null]);
+            "temperature" => $temperature??null,
+            "ic" => $ic??null
+        ]);
     }
 }
