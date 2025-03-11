@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Account;
 use App\Service\AccountService;
 
-class UserController extends AbstractController{
+final class UserController extends AbstractController{
     public function __construct(
         private readonly AccountRepository $accountRepository,
         private readonly AccountService $accountService){}
@@ -28,11 +28,21 @@ class UserController extends AbstractController{
         ]);
     }
     #[Route('/accounts', name: 'app_user_account')]
-    public function showAllAccount(): Response
-    {
-        return $this->render('user/accounts.html.twig', [
-            'accounts' => $this->accountService->getAll()  
-        ]);
+    public function showAllAccount():Response {
+        $msg ="";
+        $status ="";
+        try {
+            $this->accountService->getAll();
+            $status = "succes";
+            $msg = "Comme sur des roulettes";
+             
+        }catch (\Exception $e){
+            $status = "danger";
+            $msg = $e->getMessage();
+        }
+        $this->addFlash($status, $msg);/* si on avait mit un toaster dans la vue */
+        return $this->render('user/accounts.html.twig', //regarder depot de Mathieu, gérer sans toaster
+         ['accounts' => $this->accountService->getAll() ]);
     }
 
     #[Route('/user/add', name: 'app_user_add')]
@@ -57,5 +67,29 @@ class UserController extends AbstractController{
         return $this->render('user/addUser.html.twig',
              ['formUser'=>$form]);//même nom de variable qu'on va utiliser dans la vue
     }
+
+
+//todo en cour
+    #[Route('/user/showOne/{id}', name: 'app_user_showOne')]
+    public function showOneUser(int $id): Response{ 
+        $msg ="";
+        $status ="";
+        try {
+            $account = $this->accountService->getById($id);
+            $status = "succes";
+            $msg = "Comme sur des roulettes";
+             
+        }catch (\Exception $e){
+            $status = "danger";
+            $msg = $e->getMessage();
+        }
+        $this->addFlash($status, $msg);/* si on avait mit un toaster dans la vue */
+        return $this->render('user/oneAccount.html.twig', //regarder depot de Mathieu, gérer sans toaster
+         ["account" => $account??null,
+            "erreur" => $erreur??null ]);
+       
+    }
+
+    
 }
 

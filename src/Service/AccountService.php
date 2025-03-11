@@ -7,7 +7,7 @@ use App\Entity\Account;
 use App\Repository\AccountRepository;
 use Doctrine\ORM\EntityManager;
 
-class AccountService {
+final class AccountService {
     public function __construct(
         private readonly EntityManagerInterface $em,
         private readonly AccountRepository $accountRepository)
@@ -34,6 +34,17 @@ class AccountService {
             }
             else {
                 throw new \Exception("Problemos, aucun comptes trouvés", 400);
+            }//regarder depot de Mathieu avec un affichag conditionnel dans la vue
+    }
+
+    public function getById(int $id):Account{
+            if($account = $this->accountRepository->find($id)){
+                return $account ;
+            }
+            else {
+                throw new \Exception("aucun compte trouvé", 400);
             }
     }
 }
+
+

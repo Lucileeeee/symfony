@@ -1,0 +1,17 @@
+meta {
+  name: weather
+  type: http
+  seq: 2
+}
+
+get {
+  url: https://api.openweathermap.org/data/2.5/weather?lon=1.44&lat=43.6&appid
+  body: none
+  auth: none
+}
+
+params:query {
+  lon: 1.44
+  lat: 43.6
+  appid: 
+}

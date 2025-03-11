@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon Compte{% endblock %}
+  {% if account.id is defined %}
+    <div class="grid gap-2 p-2 xl:grid-cols-3 md:grid-cols-2 sm:grid-cols-1">
+      <div class="w-full bg-white border border-gray-200 shadow-2xs rounded-xl p-4 md:p-5 ">
+        <h1 id ="{{ account.id }}">  {{ account.firstname }} {{ account.lastname }} </h1>
+          <p>{{ account.email }}</p>
+        </div>
+  </div>
+  {% endif %}
+ {# Bloc d'erreur #}
+  {% if erreur is defined %}
+    <p>{{ erreur }}</p>
+  {% endif %}
+{% block body %}
+
+{% endblock %}

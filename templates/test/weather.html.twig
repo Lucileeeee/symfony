@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Api Weather!{% endblock %}
+
+{% block body %}
+{% if ville is defined %}
+    {{ ville }}
+    {{ pays }}
+    {{ temperature }}
+{% endblock %}
