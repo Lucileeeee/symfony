@@ -5,7 +5,7 @@
 {% block body %}
 <turbo-frame id="id-user">
   <div>
-    {{ form_start(formUser) }}
+    {{ form_start(formUser) }}{# ici même nom de variable que donné au render #}
     {{ form_label(formUser.firstname) }}
     {{ form_widget(formUser.firstname) }} {# pour chaque input qu'on récupère #}
     {{ form_label(formUser.lastname) }}

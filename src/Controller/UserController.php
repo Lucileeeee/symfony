@@ -6,14 +6,14 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\AccountRepository;
 use App\Form\AccountType;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Account;
-
+use App\Service\AccountService;
 
 class UserController extends AbstractController{
-    public function __construct(private readonly AccountRepository $accountRepository,
-    private readonly EntityManagerInterface $em){}
+    public function __construct(
+        private readonly AccountRepository $accountRepository,
+        private readonly AccountService $accountService){}
 
     #[Route(path: "/register", name:"app_home_user")]
     public function register():Response {
@@ -31,7 +31,7 @@ class UserController extends AbstractController{
     public function showAllAccount(): Response
     {
         return $this->render('user/accounts.html.twig', [
-            'accounts' => $this->accountRepository->findAll(),
+            'accounts' => $this->accountService->getAll()  
         ]);
     }
 
@@ -43,26 +43,19 @@ class UserController extends AbstractController{
         $form->handleRequest($request);
         $msg ="";
         $status ="";
-        if($form->isSubmitted()){
-            try{
-                if(!$this->accountRepository->findOneBy(['email'=>$user->getEmail()])){
-                    $user->setRoles("ROLE_USER");
-                    $this->em->persist($user);
-                    $this->em->flush();
-                    $msg= "Utilisateur bien Enregistré";
-                    $status="succes";
-                }else{
-                    $msg = "Email déjà utilisé";
-                    $status="danger";
-                }
-            }catch (\Exception $e){
-               $msg= "erreur";
-               $status="danger";
-            }
+        if($form->isSubmitted() && $form->isValid()) {
+           try{ 
+                $this->accountService->save($user);
+                $status = "succes";
+                $msg = "Utilisateur bien enregistré";
+           }catch (\Exception $e){
+                $status = "danger";
+                $msg = $e->getMessage();
+           } 
+           $this->addFlash($status, $msg);
         }
-        $this->addFlash($status, $msg);
         return $this->render('user/addUser.html.twig',
-             ['formUser'=>$form]);
+             ['formUser'=>$form]);//même nom de variable qu'on va utiliser dans la vue
     }
 }
 

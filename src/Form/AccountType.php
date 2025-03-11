@@ -32,8 +32,7 @@ class AccountType extends AbstractType
                     ['attr'=>['placeholder'=>'saisir votre email']])
             ->add('password', PasswordType::class, 
                 [ 'hash_property_path' => 'password',
-                    'mapped' => false,
-                    'label'=> 'Mot De Passe'],
+                   'label'=> 'Mot De Passe'],
                 ['attr'=>['placeholder'=>'saisir un mot de passe']])
             //todo verif d'email avec un deuxieme input
             ->add('save', SubmitType::class,
